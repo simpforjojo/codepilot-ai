@@ -1,7 +1,7 @@
 from pathlib import Path
 
 from app.models.file_metadata import FileMetadata
-
+from app.services.chunk_engine import ChunkEngine
 
 class IndexService:
 
@@ -42,6 +42,7 @@ class IndexService:
                 language=self.LANGUAGE_MAP.get(path.suffix, "Unknown"),
                 size=path.stat().st_size,
                 lines=len(text.splitlines())
+            chunks = self.chunk_engine.chunk(path)
             )
 
             index.append(metadata)
